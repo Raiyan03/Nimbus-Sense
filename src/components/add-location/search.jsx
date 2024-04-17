@@ -6,7 +6,7 @@ import MainLayout from '../../layouts/mainLayout';
 import { getCity, getGeoCode } from '../../lib/actions';
 import { insertLocation } from '../../lib/db';
 
-const SearchBar = () => {
+const SearchBar = ({ Locations, setLocations}) => {
   const inputRef = useRef(null);
   const navigation = useNavigation(); // Get navigation object
   const [searchText, setSearchText] = useState('');
@@ -18,18 +18,6 @@ const SearchBar = () => {
 
   const showToast = (message) => {
     ToastAndroid.show(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
-  };
-
-  const handleAddPress = () => {
-    // Handle add button press here
-    console.log('Add button pressed');
-    Alert.alert(
-      'New location added!',
-      '',
-      [
-        { text: 'OK', onPress: () => navigation.goBack() } 
-      ]
-    );
   };
 
   const handleChange = async (text) => {
@@ -44,14 +32,17 @@ const SearchBar = () => {
   }
 
   const handleSuggestionPress = (suggestion) => {
-    // Handle suggestion press (e.g., fill input with suggestion, navigate to suggestion)
     console.log('Suggestion pressed:', suggestion);
     setSearchText(s => suggestion.name);
     if (suggestion) {
       const { name, lat, lon } = suggestion;
-      // insertLocation(city, lat, lon);
-      showToast(`${ name } added to locations!`);
-      navigation.goBack();
+      const added = insertLocation(name, lat, lon);
+      if (added) {
+        const id = Locations.length + 1;
+        setLocations([...Locations, { id, name, latitude: lat, longitude: lon }]);
+        showToast(`${ name } added to locations!`);
+        navigation.goBack();
+      }
     }
   };
 

@@ -1,11 +1,24 @@
 import React from "react";
 import { View, TextInput, Text, Button, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import { getCurrentWeather } from "../../lib/actions";
+import {intoTemp} from "../../lib/_utils";
 
-const Card = ({ location, temp, desc }) => {
+const Card = ({ city, lat, lon }) => {
+    const [weather, setWeather] = useState();
+
+    useEffect(()=>{
+        (async () => {
+            const data = await getCurrentWeather(lat, lon);
+            setWeather(w => data);
+        })()
+    }, []);
+
+    console.log('Weather:', weather);
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                My Location - 15
+                {city} - { weather ?  intoTemp(weather.main.temp) : 0}
             </Text>
             <Text style={styles.desc}>Cloudy</Text>
             <View style={styles.line}></View>

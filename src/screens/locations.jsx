@@ -1,16 +1,33 @@
-// Settings.js
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { useState, useContext } from 'react';
+import { View, StyleSheet, SafeAreaView, Platform, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Card from '../components/location/card'; // Assuming you have a Card component
 import MainLayout from '../layouts/mainLayout';
-import { WeatherContext } from '../../App';
+import { WeatherContext } from '../context/weather-context';
 
-const Locations = () => {
-
+const Location = ({ navigation }) => {
+    const { setCity, setLat, setLon, Locations } = useContext(WeatherContext);
+    const [temp, setTemp] = useState(0);
+    const handlePress = ({name, latitude, longitude}) => {
+        setLat(l => latitude);
+        setLon(l => longitude);
+        setCity(c => name);
+        navigation.navigate('Home');
+    }
+        
     return (
         <MainLayout>
             <SafeAreaView style={styles.container}>
-                <Card />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {
+                        Locations ? Locations.map(location => (
+                            <TouchableOpacity key={location.id} onPress={() => handlePress(location)}>
+                                <Card city={location.name} lat={location.latitude} lon={location.longitude} />
+                            </TouchableOpacity>
+                        ))
+                            : <Text>No locations found</Text>
+                    }
+                </ScrollView>
             </SafeAreaView>
         </MainLayout>
     );
@@ -22,4 +39,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Locations;
+export default Location;
