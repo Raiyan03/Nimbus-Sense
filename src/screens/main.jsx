@@ -27,7 +27,7 @@ const Home = () => {
     return (
         <MainLayout>
             <SafeAreaView style={styles.container}>
-
+                 {/* Add your components here */}
             </SafeAreaView>
         </MainLayout>
     );

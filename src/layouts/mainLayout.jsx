@@ -8,6 +8,7 @@ const MainLayout = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
+  // Do not change the existing style properties
   container: {
     flex: 1,
     padding: 20,
