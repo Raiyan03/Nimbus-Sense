@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
@@ -8,25 +7,27 @@ import Settings from './src/screens/settings';
 import Home from './src/screens/main';
 import Locations from './src/screens/locations';
 import AddLocation from './src/screens/add-location';
-import MainLayout from './src/layouts/mainLayout';
+import { WeatherProvider } from './src/context/weather-context';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-      <NavigationContainer>
 
+  
+  return (
+    <WeatherProvider>
+      <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerTransparent: true, // Make the header background transparent
-            headerTitleStyle: {
+            headerTitleStyle: { 
               fontWeight: 'bold',
             },
             headerTitleAlign: 'center',
             headerTintColor: '#000', // Set the color of header text and icons
             headerShadowVisible: false, // Disable shadow on iOS
             headerStyle: {
-              elevation: 0, // Remove shadow on Android
+              elevation: 0, 
             },
           }}
         >
@@ -35,7 +36,7 @@ export default function App() {
             name="Home" 
             component={Home}
             options={({ navigation }) => ({
-              title: 'Calgary',
+              title: 'Nimbus sense',
               headerRight: () => (
                 <TouchableOpacity
                   style={{ marginRight: 10 }}
@@ -55,6 +56,10 @@ export default function App() {
             })}
           />
 
+          {/* Settings screen */}
+          <Stack.Screen name="Settings" component={Settings}/>
+
+
           {/* Locations screen */}
 
           <Stack.Screen 
@@ -71,10 +76,11 @@ export default function App() {
             ),
             })}
           />
-          <Stack.Screen name="Settings" component={Settings}/>
+          {/* Add Location screen */}
           <Stack.Screen name="Add Location" component={AddLocation}/>
         </Stack.Navigator>
       
       </NavigationContainer>
+    </WeatherProvider>
   );
 }

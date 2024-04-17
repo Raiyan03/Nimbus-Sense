@@ -1,15 +1,24 @@
-import React, { useRef, useEffect } from 'react';
-import { TextInput, View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { TextInput, View, StyleSheet, TouchableOpacity, Text, Alert, FlatList, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import SuggestionCard from './suggestion-card';
 import MainLayout from '../../layouts/mainLayout';
+import { getCity, getGeoCode } from '../../lib/actions';
+import { insertLocation } from '../../lib/db';
 
 const SearchBar = () => {
   const inputRef = useRef(null);
   const navigation = useNavigation(); // Get navigation object
+  const [searchText, setSearchText] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const showToast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  };
 
   const handleAddPress = () => {
     // Handle add button press here
@@ -23,6 +32,29 @@ const SearchBar = () => {
     );
   };
 
+  const handleChange = async (text) => {
+    console.log('Search text:', text.length);
+    setSearchText(s => text);
+    if (text.length > 2) {
+      const data = await getGeoCode(text);
+      setSuggestions(s => data);
+    } else {
+      setSuggestions([]);
+    }
+  }
+
+  const handleSuggestionPress = (suggestion) => {
+    // Handle suggestion press (e.g., fill input with suggestion, navigate to suggestion)
+    console.log('Suggestion pressed:', suggestion);
+    setSearchText(s => suggestion.name);
+    if (suggestion) {
+      const { name, lat, lon } = suggestion;
+      // insertLocation(city, lat, lon);
+      showToast(`${ name } added to locations!`);
+      navigation.goBack();
+    }
+  };
+
   return (
     <MainLayout>
       <View style={styles.container}>
@@ -31,10 +63,21 @@ const SearchBar = () => {
           placeholder="Search..."
           style={styles.searchBar}
           autoFocus={true}
+          onChangeText={handleChange}
         />
-        <TouchableOpacity style={styles.addButton} onPress={handleAddPress}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={suggestions}
+          renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleSuggestionPress(item)}>
+            <SuggestionCard
+              city={item.name}
+              state={item.state}
+              country={item.country}
+            />
+          </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </MainLayout>
   );
@@ -42,9 +85,7 @@ const SearchBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
     padding: 10,
     height: '100%',
   },
@@ -53,19 +94,11 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderBottomWidth: 1,
     paddingHorizontal: 10,
-    flex: 1,
-    marginRight: 10,
+    marginBottom: 10,
   },
-  addButton: {
-    backgroundColor: 'blue',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  addButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+  suggestionsList: {
+    maxHeight: 200,
+    borderRadius: 10,
   },
 });
 

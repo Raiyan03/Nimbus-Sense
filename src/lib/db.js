@@ -26,7 +26,7 @@ const insertLocation = (name, latitude, longitude) => {
             [name, latitude, longitude],
             (tx, results) => {
                 if (results.rowsAffected > 0) {
-                    console.log('Location inserted successfully');
+                    return true;
                 } else {
                     console.error('Failed to insert location');
                 }
