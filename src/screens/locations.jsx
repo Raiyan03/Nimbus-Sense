@@ -1,17 +1,15 @@
 // Settings.js
 import React from 'react';
-import { View,Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import Card from '../components/location/card'; // Assuming you have a Card component
 import MainLayout from '../layouts/mainLayout';
 
-const Settings = () => {
-    // Calculate the height of the transparent header
+const Locations = () => {
+
     return (
         <MainLayout>
             <SafeAreaView style={styles.container}>
-                <Text>
-                    This is setting screen
-                </Text>
+                <Card />
             </SafeAreaView>
         </MainLayout>
     );
@@ -23,4 +21,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Settings;
+export default Locations;
