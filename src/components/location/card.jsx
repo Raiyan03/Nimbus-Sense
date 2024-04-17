@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getCurrentWeather } from "../../lib/actions";
 import {intoTemp} from "../../lib/_utils";
 
-const Card = ({ city, lat, lon }) => {
+const Card = ({ city, lat, lon, unit }) => {
     const [weather, setWeather] = useState();
 
     useEffect(()=>{
@@ -14,13 +14,12 @@ const Card = ({ city, lat, lon }) => {
         })()
     }, []);
 
-    console.log('Weather:', weather);
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                {city} - { weather ?  intoTemp(weather.main.temp) : 0}
+                {city} - { weather ?  intoTemp(weather.main.temp, unit) : 0}
             </Text>
-            <Text style={styles.desc}>Cloudy</Text>
+            <Text style={styles.desc}>{ weather ? weather.weather[0].description : ''}</Text>
             <View style={styles.line}></View>
         </View>
     );

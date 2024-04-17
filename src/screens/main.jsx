@@ -6,7 +6,7 @@ import { WeatherContext } from '../context/weather-context';
 import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
-    const { city, lat, lon } = useContext(WeatherContext);
+    const { city, lat, lon, setCity, setLat, setLon, Locations, unit, forecast } = useContext(WeatherContext);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -15,13 +15,19 @@ const Home = () => {
         });
     }, [city]);
 
+
+
+    /*
+    Whenever you are displaying temperature make sure to pass the temperature value throng 
+    the `intoTemp(temp, unit)` the params are the temperature value and the unit of measurement
+
+    for unit just pass `unit` variable which is defined above from the context
+    */
+
     return (
         <MainLayout>
             <SafeAreaView style={styles.container}>
-                <Text>Home Screen</Text>
-                <Text>City: {city}</Text>
-                <Text>Latitude: {lat}</Text>
-                <Text>Longitude: {lon}</Text>
+
             </SafeAreaView>
         </MainLayout>
     );

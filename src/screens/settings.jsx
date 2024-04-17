@@ -1,17 +1,19 @@
 // Settings.js
 import React from 'react';
-import { View,Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { useContext } from 'react';
+import { View,Text, StyleSheet, SafeAreaView, Platform, ToastAndroid } from 'react-native';
 import Card from '../components/location/card'; // Assuming you have a Card component
 import MainLayout from '../layouts/mainLayout';
+import SelectOption from '../components/settings/select-locations';
+import { WeatherContext } from '../context/weather-context';
 
 const Settings = () => {
-    // Calculate the height of the transparent header
+    const { unit, setUnit } = useContext(WeatherContext);
+
     return (
         <MainLayout>
             <SafeAreaView style={styles.container}>
-                <Text>
-                    This is setting screen
-                </Text>
+                <SelectOption unit={unit} setUnit={setUnit} />
             </SafeAreaView>
         </MainLayout>
     );

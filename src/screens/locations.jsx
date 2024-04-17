@@ -6,7 +6,7 @@ import MainLayout from '../layouts/mainLayout';
 import { WeatherContext } from '../context/weather-context';
 
 const Location = ({ navigation }) => {
-    const { setCity, setLat, setLon, Locations } = useContext(WeatherContext);
+    const { setCity, setLat, setLon, Locations, unit } = useContext(WeatherContext);
     const [temp, setTemp] = useState(0);
     const handlePress = ({name, latitude, longitude}) => {
         setLat(l => latitude);
@@ -22,7 +22,7 @@ const Location = ({ navigation }) => {
                     {
                         Locations ? Locations.map(location => (
                             <TouchableOpacity key={location.id} onPress={() => handlePress(location)}>
-                                <Card city={location.name} lat={location.latitude} lon={location.longitude} />
+                                <Card city={location.name} lat={location.latitude} lon={location.longitude} unit={unit} />
                             </TouchableOpacity>
                         ))
                             : <Text>No locations found</Text>

@@ -69,7 +69,6 @@ const fetchLocation = () => {
                     for (let i = 0; i < location; i++) {
                         locationArray.push(results.rows.item(i));
                     }
-                    console.log('Locations fetched:', locationArray);
                     resolve(locationArray);
                 },
                 (tx, error) => {

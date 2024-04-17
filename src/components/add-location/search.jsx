@@ -21,7 +21,6 @@ const SearchBar = ({ Locations, setLocations}) => {
   };
 
   const handleChange = async (text) => {
-    console.log('Search text:', text.length);
     setSearchText(s => text);
     if (text.length > 2) {
       const data = await getGeoCode(text);
