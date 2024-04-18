@@ -1,20 +1,31 @@
 import { createContext, useState, useEffect } from 'react';
 import * as loc from 'expo-location';
 import { getCurrentWeather, getCity, getForecast } from '../lib/actions';
-import { fetchLocation } from '../lib/db';
+import { createDatabase, fetchLocation } from '../lib/db';
 
 const WeatherContext = createContext();
 
 const WeatherProvider = ({ children }) => {
-    
+
     const [weather, setWeather] = useState(null);
     const [lat, setLat] = useState(null);
     const [lon, setLon] = useState(null);
     const [city, setCity] = useState(null);
     const [Locations, setLocations] = useState(null);
-    const [ unit, setUnit ] = useState('celsius');
+    const [unit, setUnit] = useState('celsius');
     const [forecast, setForecast] = useState(null);
-    
+
+    useEffect(() => {
+        (async () => {
+            try {
+                await createDatabase();
+            }
+            catch {
+                console.log("Failed to create Database");
+            }
+        })()
+    }, [])
+
     useEffect(() => {
         (async () => {
             try {
@@ -26,9 +37,9 @@ const WeatherProvider = ({ children }) => {
             }
         })();
     }, []);
-    
 
-    
+
+
     useEffect(() => {
         (async () => {
             try {
@@ -46,7 +57,7 @@ const WeatherProvider = ({ children }) => {
             }
         })();
     }, []);
-    
+
 
     useEffect(() => {
         if (!lat || !lon) {
@@ -81,7 +92,7 @@ const WeatherProvider = ({ children }) => {
     }, [lat, lon]);
 
     return (
-        <WeatherContext.Provider value={{ weather, city, setCity, lat, setLat, lon, setLon, Locations, setLocations, setUnit, unit, forecast}}>
+        <WeatherContext.Provider value={{ weather, city, setCity, lat, setLat, lon, setLon, Locations, setLocations, setUnit, unit, forecast }}>
             {children}
         </WeatherContext.Provider>
     );

@@ -37,10 +37,16 @@ const SearchBar = ({ Locations, setLocations}) => {
       const { name, lat, lon } = suggestion;
       const added = insertLocation(name, lat, lon);
       if (added) {
-        const id = Locations.length + 1;
-        setLocations([...Locations, { id, name, latitude: lat, longitude: lon }]);
-        showToast(`${ name } added to locations!`);
-        navigation.goBack();
+        if(Locations === null || Locations.length === 0) {
+          setLocations([{ id:1, name, latitude: lat, longitude: lon }]);
+          showToast(`${ name } added to locations!`);
+          navigation.goBack();
+        }else{
+          const id = Locations.length + 1;
+          setLocations([...Locations, { id:1, name, latitude: lat, longitude: lon }]);
+          showToast(`${ name } added to locations!`);
+          navigation.goBack();
+        }
       }
     }
   };
