@@ -4,9 +4,16 @@ import { View, Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import MainLayout from '../layouts/mainLayout';
 import { WeatherContext } from '../context/weather-context';
 import { useNavigation } from '@react-navigation/native';
+import Humidity from '../components/main-page/Humidity';
+import WeatherImage from '../components/main-page/WeatherImage';
+import TemperatureCircle from '../components/main-page/TemperatureCircle';
+import WindSpeed from '../components/main-page/WindSpeed';
+import BackgroundManager from '../components/BackgoundColour';
+import Visibility from '../components/main-page/Visiblity';
+import Pressure from '../components/main-page/Pressure';
 
 const Home = () => {
-    const { city, lat, lon, setCity, setLat, setLon, Locations, unit, forecast } = useContext(WeatherContext);
+    const { city, lat, lon, setCity, setLat, setLon, Locations, unit, forecast, weather } = useContext(WeatherContext);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -26,9 +33,22 @@ const Home = () => {
 
     return (
         <MainLayout>
-            <SafeAreaView style={styles.container}>
-                 {/* Add your components here */}
-            </SafeAreaView>
+            <BackgroundManager weather={weather}>
+                <SafeAreaView style={styles.container}>
+                    <WeatherImage />
+                    <View style={styles.row}>
+                        <TemperatureCircle unit={unit} weather={weather} />
+                        <View style={styles.column}>
+                            <Humidity weather={weather} />
+                            <WindSpeed weather={weather} />
+                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <Visibility weather={weather} />
+                        <Pressure weather={weather} />
+                    </View>
+                </SafeAreaView>
+            </BackgroundManager>
         </MainLayout>
     );
 };
@@ -37,6 +57,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    column: {
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+
 });
 
 export default Home;
