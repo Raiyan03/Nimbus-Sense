@@ -18,7 +18,7 @@ const WeatherProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                await dropTables();
+                await createDatabase();
             }
             catch {
                 console.log("Failed to create Database");
@@ -32,7 +32,6 @@ const WeatherProvider = ({ children }) => {
                 console.log('Fetching locations...');
                 const dbLoc = await fetchLocation();
                 setLocations(dbLoc);
-                console.log('Locations fetched successfully', dbLoc);
             } catch (error) {
                 console.log('Error fetching locations:', error);
             }
