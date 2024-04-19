@@ -43,7 +43,7 @@ const SearchBar = ({ Locations, setLocations}) => {
           navigation.goBack();
         }else{
           const id = Locations.length + 1;
-          setLocations([...Locations, { id:1, name, latitude: lat, longitude: lon }]);
+          setLocations([...Locations, { id, name, latitude: lat, longitude: lon }]);
           showToast(`${ name } added to locations!`);
           navigation.goBack();
         }

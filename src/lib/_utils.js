@@ -27,7 +27,7 @@ export const intoDate = (timestamp) => {
 
 export const intoDay = (timestamp) => {
     const date = new Date(timestamp * 1000);
-    const format = { weekday: 'long' }
+    const format = { weekday: 'short' };
     const readableTime = date.toLocaleDateString('en-us', format);
     return readableTime;
 }
@@ -35,4 +35,33 @@ export const intoDay = (timestamp) => {
 const intoFarenheit = (celsius) => {
     const fahrenheit = (celsius * 9/5) + 32;
     return fahrenheit;
+}
+
+export const forecastForCurrentDay = (forecast) => {
+    const data = forecast;
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set hours to midnight for comparison
+    
+    // Create a map to store objects for each day
+    const objectsMap = new Map();
+
+    data.forEach(obj => {
+        const objDate = new Date(obj.dt * 1000); // Convert timestamp to milliseconds
+        objDate.setHours(0, 0, 0, 0); // Set hours to midnight for comparison
+
+        // Check if the object is for today
+        if (objDate.getTime() === currentDate.getTime()) {
+            return; // Skip objects for today
+        }
+
+        // Add the object to the map
+        const dateString = objDate.toISOString().slice(0, 10); // Get YYYY-MM-DD format
+        if (!objectsMap.has(dateString)) {
+            objectsMap.set(dateString, obj);
+        }
+    });
+
+    // Convert the map values to an array
+    const objectsForOtherDays = Array.from(objectsMap.values());
+    return objectsForOtherDays;
 }

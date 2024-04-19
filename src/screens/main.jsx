@@ -11,6 +11,8 @@ import WindSpeed from '../components/main-page/WindSpeed';
 import BackgroundManager from '../components/BackgoundColour';
 import Visibility from '../components/main-page/Visiblity';
 import Pressure from '../components/main-page/Pressure';
+import ForecastBar from '../components/main-page/ForecastBar';
+import FeelsLike from '../components/main-page/FeelsLike';
 
 const Home = () => {
     const { city, lat, lon, setCity, setLat, setLon, Locations, unit, forecast, weather } = useContext(WeatherContext);
@@ -33,7 +35,7 @@ const Home = () => {
 
     return (
         <MainLayout>
-            <BackgroundManager weather={weather}>
+            {/* <BackgroundManager weather={weather}> */}
                 <SafeAreaView style={styles.container}>
                     <WeatherImage />
                     <View style={styles.row}>
@@ -43,12 +45,14 @@ const Home = () => {
                             <WindSpeed weather={weather} />
                         </View>
                     </View>
-                    <View style={styles.row}>
+                    <ForecastBar forecastData={forecast} unit={unit} />
+                    <View style={styles.condBAr}>
                         <Visibility weather={weather} />
                         <Pressure weather={weather} />
+                        <FeelsLike weather={weather} unit={unit} />
                     </View>
                 </SafeAreaView>
-            </BackgroundManager>
+            {/* </BackgroundManager> */}
         </MainLayout>
     );
 };
@@ -56,15 +60,21 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        gap: 40,
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+
     },
     column: {
         flexDirection: 'column',
         justifyContent: 'center'
     },
+    condBAr: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
 
 });
 

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   infoBoxDay: {
     backgroundColor: '#29B6F6', // Lighter blue for day
     borderRadius: 25,
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     marginVertical: 10,
     alignItems: 'center',

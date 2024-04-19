@@ -41,10 +41,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   pickerContainer: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
     paddingHorizontal: 10,
   },
   picker: {

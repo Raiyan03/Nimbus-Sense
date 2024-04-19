@@ -1,21 +1,26 @@
-
 import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const headerHeight = Platform.OS === 'ios' ? 44 : 56;
 
 const MainLayout = ({ children }) => {
     return (
-        <View style={styles.container}>{children}</View>
+        <LinearGradient
+          colors={['#FDDE71', '#FCE697', '#FAF6E5']} // Your gradient colors
+          style={styles.container}
+        >
+            {children}
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
-  // Do not change the existing style properties
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: headerHeight+50,
+    paddingTop: headerHeight + 50,
+    // backgroundColor is not needed here because the gradient is used
   },
 });
 

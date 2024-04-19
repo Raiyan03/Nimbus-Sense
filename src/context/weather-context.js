@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import * as loc from 'expo-location';
 import { getCurrentWeather, getCity, getForecast } from '../lib/actions';
-import { createDatabase, fetchLocation } from '../lib/db';
+import { createDatabase, dropTables, fetchLocation } from '../lib/db';
 
 const WeatherContext = createContext();
 
@@ -18,7 +18,7 @@ const WeatherProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                await createDatabase();
+                await dropTables();
             }
             catch {
                 console.log("Failed to create Database");
@@ -32,11 +32,12 @@ const WeatherProvider = ({ children }) => {
                 console.log('Fetching locations...');
                 const dbLoc = await fetchLocation();
                 setLocations(dbLoc);
+                console.log('Locations fetched successfully', dbLoc);
             } catch (error) {
                 console.log('Error fetching locations:', error);
             }
         })();
-    }, []);
+    }, [weather]);
 
 
 
@@ -90,6 +91,7 @@ const WeatherProvider = ({ children }) => {
             }
         })();
     }, [lat, lon]);
+
 
     return (
         <WeatherContext.Provider value={{ weather, city, setCity, lat, setLat, lon, setLon, Locations, setLocations, setUnit, unit, forecast }}>
