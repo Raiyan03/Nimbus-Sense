@@ -16,39 +16,6 @@ const TemperatureCircle = ({ weather, unit }) => {
         setWeatherData(weather)
     }, [weather])
 
-    useEffect(() => {
-        (async () => {
-            fadeIn();
-            const intervalId = setInterval(() => {
-                fadeOut();
-                setTimeout(() => {
-                    setShowFeelsLike(prev => !prev);
-                    fadeIn();
-                }, 8000);
-            }, 8000);
-
-            return () => clearInterval(intervalId);
-        })();
-    }, []);
-
-    const fadeIn = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-        }).start();
-    };
-    
-    const fadeOut = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 500,
-            useNativeDriver: true,
-        }).start();
-    };
-
-
-
 
     const temperature = weatherData ? intoTemp(showFeelsLike ? weatherData.main.feels_like : weatherData.main.temp, unit) : '...';
     const high = weatherData ? intoTemp(weatherData.main.temp_max, unit) : '...';
@@ -68,15 +35,10 @@ const TemperatureCircle = ({ weather, unit }) => {
     return (
         <View style={circleStyle}>
             <View style={styles.tempContainer}>
-                {showFeelsLike && (
-                    <Animated.Text style={[styles.feelsLikeText, { opacity: fadeAnim }]}>
-                        Feels like
-                    </Animated.Text>
-                )}
-            <Animated.Text style={[textStyle, { opacity: fadeAnim }]}>
-                {`${temperature}`}
-            </Animated.Text>
-        </View>
+                <Text style={[textStyle]}>
+                    {`${temperature}`}
+                </Text>
+            </View>
         <Text style={{ ...styles.highLow, color: textStyle.color, }}>H: {`${high}`}   L: {`${low}`}</Text>
         </View>
     );

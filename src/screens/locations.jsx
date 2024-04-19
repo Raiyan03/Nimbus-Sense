@@ -25,7 +25,7 @@ const Location = ({ navigation }) => {
                                 <Card city={location.name} lat={location.latitude} lon={location.longitude} unit={unit} />
                             </TouchableOpacity>
                         ))
-                            : <Text>No locations found</Text>
+                            : <Text style={styles.text}>No locations found you can save different locations by clicking on "+"</Text>
                     }
                 </ScrollView>
             </SafeAreaView>
@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    text: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: 20,
+    }
 });
 
 export default Location;

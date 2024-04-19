@@ -8,7 +8,6 @@ import Humidity from '../components/main-page/Humidity';
 import WeatherImage from '../components/main-page/WeatherImage';
 import TemperatureCircle from '../components/main-page/TemperatureCircle';
 import WindSpeed from '../components/main-page/WindSpeed';
-import BackgroundManager from '../components/BackgoundColour';
 import Visibility from '../components/main-page/Visiblity';
 import Pressure from '../components/main-page/Pressure';
 import ForecastBar from '../components/main-page/ForecastBar';
@@ -23,9 +22,6 @@ const Home = () => {
             title: city ? city : 'Nimbus Sense'
         });
     }, [city]);
-
-
-
     /*
     Whenever you are displaying temperature make sure to pass the temperature value throng 
     the `intoTemp(temp, unit)` the params are the temperature value and the unit of measurement

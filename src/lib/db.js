@@ -9,7 +9,6 @@ const createDatabase = () => {
                 'CREATE TABLE IF NOT EXISTS location (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, latitude TEXT, longitude TEXT)',
                 [],
                 (tx, results) => {
-                    console.log('Location table created');
                     resolve();
                 },
                 (tx, error) => {
@@ -23,14 +22,12 @@ const createDatabase = () => {
 
 const insertLocation = (name, latitude, longitude) => {
     return new Promise((resolve, reject) => {
-        console.log('Inserting location:', name, latitude, longitude);
         database.transaction((tx) => {
             tx.executeSql(
                 'INSERT INTO location (name, latitude, longitude) VALUES (?, ?, ?)',
                 [name, latitude, longitude],
                 (tx, results) => {
                     if (results.rowsAffected > 0) {
-                        console.log('Location inserted successfully');
                         resolve(true);
                     } else {
                         console.error('Failed to insert location');

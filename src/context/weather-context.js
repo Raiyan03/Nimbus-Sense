@@ -63,7 +63,6 @@ const WeatherProvider = ({ children }) => {
         if (!lat || !lon) {
             return;
         }
-        console.log('Fetching weather data... for lat:', lat, 'lon:', lon);
         (async () => {
             try {
                 const name = await getCity(lat, lon);
@@ -77,7 +76,6 @@ const WeatherProvider = ({ children }) => {
                 alert('Failed to fetch weather data. Please try again later.');
             }
         })();
-        console.log('Fetching forecast data... for lat:', lat, 'lon:', lon);
         (async () => {
             try {
                 const response = await getForecast(lat, lon, unit);
