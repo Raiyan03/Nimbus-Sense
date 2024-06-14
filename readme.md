@@ -13,11 +13,7 @@ Welcome to Nimbus-Sense! This project aims to provide a comprehensive solution f
 
 Check out our video demo to see Nimbus-Sense in action!
 
-
-- Real-time data collection
-- Data visualization
-- Advanced analytics
-- User-friendly interface
+https://github.com/Raiyan03/Nimbus-Sense/assets/87060977/75e2f2cb-7de8-407b-9341-8741d6b6cc46
 
 ## Installation
 
